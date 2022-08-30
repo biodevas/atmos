@@ -1,0 +1,33 @@
+{
+    "locations":[
+        {
+            "state": "spain",
+            "region": "Oviedo",
+            "city":["Lugones Instituto, Asturias", "P. Deportes, Asturias", "Trubia, Asturias", "P. Toros, Asturias", "Sama, Asturias", "Purificación Tomás, Asturias"]
+        },
+        {
+            "state": "spain",
+            "region": "Gijón",
+            "city":["Constitución, Asturias", "Montevil, Asturias", "Calle Río Narcea, Gijon, Spain", "Calle Río de Oro, Distrito Llano, Spain", "Cl Smara, Gijón, Spain", "Calle Anselmo Solar, Gijón, Spain", "Acceso Centro de Arte Universidad Laboral, Distrito Rural, Spain", "Castilla, Asturias, Spain", "Avenida de Castilla, Gijon, Spain", "Cl Ezcurdia, Gijon, Spain", "Calle Puerto de Leitariegos, Gijon, Spain", "Cl Mariano Pola, Gijon, Spain", "Calle Mariano Pola, Gijon, Spain", "Argentina, Asturias, Spain", "Avenida de Castilla, Gijon, Spain", "Cl Prosperidad, Gijon, Spain"]
+        },
+        {
+            "state": "spain",
+            "region": "Avilés",
+            "city":["Llaranes, Asturias", "Llano Ponte, Asturias, Spain", "Plaza Guitarra, Asturias, Spain", "Matadero, Asturias, Spain", "Salinas, Asturias, Spain"]
+        },
+		{
+            "state": "spain",
+            "region": "Cuencas",
+            "city":["Blimea, Asturias", "Jardines de Juan XXIII, Asturias", "Santa Barbara, Asturias", "Cs Collado El (linares Pq), San Martín Del Rey Aurelio, Spain"]
+        },
+		{
+            "state": "spain",
+            "region": "Villaviciosa",
+            "city":["Al La Carbayera, Villaviciosa, Spain"]
+        },
+		{
+            "state": "spain",
+            "region": "Oriente",
+            "city":["Cangas, Asturias"]
+        }]
+}

@@ -1,0 +1,775 @@
+[
+    {
+        "id": "7addb0f3d615f5f1",
+        "type": "tab",
+        "label": "Aire",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "2463489cc80b8dc9",
+        "type": "mydbConfig",
+        "name": "PSQL connection",
+        "host": "127.0.0.1",
+        "port": "5432",
+        "database": "aire",
+        "ssl": false,
+        "rejectUnauthorized": false,
+        "ca": "",
+        "key": "",
+        "cert": "",
+        "max": "10",
+        "min": "1",
+        "idle": "1000"
+    },
+    {
+        "id": "04768ee9fddb21de",
+        "type": "inject",
+        "z": "7addb0f3d615f5f1",
+        "name": "",
+        "props": [],
+        "repeat": "1800",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 130,
+        "y": 80,
+        "wires": [
+            [
+                "2f86c7ae575ca3d4"
+            ]
+        ]
+    },
+    {
+        "id": "50a2522512ceb1d1",
+        "type": "file in",
+        "z": "7addb0f3d615f5f1",
+        "name": "Config file",
+        "filename": "/root/.node-red/files/air-config.json",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 500,
+        "y": 80,
+        "wires": [
+            [
+                "378fdec95fe678a0"
+            ]
+        ]
+    },
+    {
+        "id": "378fdec95fe678a0",
+        "type": "json",
+        "z": "7addb0f3d615f5f1",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 630,
+        "y": 80,
+        "wires": [
+            [
+                "d450c72a6f89361c"
+            ]
+        ]
+    },
+    {
+        "id": "73dc946c0c4a0949",
+        "type": "split",
+        "z": "7addb0f3d615f5f1",
+        "name": "Split Array",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "x": 190,
+        "y": 180,
+        "wires": [
+            [
+                "119c0815ba86dd47"
+            ]
+        ]
+    },
+    {
+        "id": "119c0815ba86dd47",
+        "type": "split",
+        "z": "7addb0f3d615f5f1",
+        "name": "Split locations",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "x": 360,
+        "y": 180,
+        "wires": [
+            [
+                "a2e6de1ecd3bffc3"
+            ]
+        ]
+    },
+    {
+        "id": "9a5e7c9ee14856ee",
+        "type": "change",
+        "z": "7addb0f3d615f5f1",
+        "name": "Set state & region",
+        "rules": [
+            {
+                "t": "set",
+                "p": "state",
+                "pt": "msg",
+                "to": "payload.state",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "region",
+                "pt": "msg",
+                "to": "payload.region",
+                "tot": "msg"
+            },
+            {
+                "t": "delete",
+                "p": "payload.state",
+                "pt": "msg"
+            },
+            {
+                "t": "delete",
+                "p": "payload.region",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 730,
+        "y": 180,
+        "wires": [
+            [
+                "3ae7592fd27c4366"
+            ]
+        ]
+    },
+    {
+        "id": "ec3daea3b203f705",
+        "type": "split",
+        "z": "7addb0f3d615f5f1",
+        "name": "Split Citys",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "x": 1060,
+        "y": 180,
+        "wires": [
+            [
+                "de237349ded547c4"
+            ]
+        ]
+    },
+    {
+        "id": "2f86c7ae575ca3d4",
+        "type": "change",
+        "z": "7addb0f3d615f5f1",
+        "name": "Set URLs and Token",
+        "rules": [
+            {
+                "t": "set",
+                "p": "search",
+                "pt": "flow",
+                "to": "https://api.waqi.info/search/?keyword=",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "feed",
+                "pt": "flow",
+                "to": "https://api.waqi.info/feed/",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "token",
+                "pt": "flow",
+                "to": "7b2e62ffd35a6b0d0b76cbae2976c880d3455fa3",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 300,
+        "y": 80,
+        "wires": [
+            [
+                "50a2522512ceb1d1"
+            ]
+        ]
+    },
+    {
+        "id": "3ae7592fd27c4366",
+        "type": "split",
+        "z": "7addb0f3d615f5f1",
+        "name": "Split Array",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "x": 910,
+        "y": 180,
+        "wires": [
+            [
+                "ec3daea3b203f705"
+            ]
+        ]
+    },
+    {
+        "id": "b0adeae2c4f5ace1",
+        "type": "function",
+        "z": "7addb0f3d615f5f1",
+        "name": "Create search URL",
+        "func": "var search = flow.get(\"search\");\nvar token = flow.get(\"token\");\nvar url;\n\n\nurl = search.concat(msg.payload);\nurl = url.concat('&token=');\nurl = url.concat(token);\n\ndelete msg.payload;\nmsg.url = url;\n\nreturn msg;    ",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 210,
+        "y": 280,
+        "wires": [
+            [
+                "92aa755fc38479b8"
+            ]
+        ]
+    },
+    {
+        "id": "92aa755fc38479b8",
+        "type": "http request",
+        "z": "7addb0f3d615f5f1",
+        "name": "Search the city",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 410,
+        "y": 280,
+        "wires": [
+            [
+                "a92cb4ef2324a4d8"
+            ]
+        ]
+    },
+    {
+        "id": "a92cb4ef2324a4d8",
+        "type": "switch",
+        "z": "7addb0f3d615f5f1",
+        "name": "If exists",
+        "property": "payload.status",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "ok",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 580,
+        "y": 280,
+        "wires": [
+            [
+                "0686022ff2ecf1fc"
+            ]
+        ]
+    },
+    {
+        "id": "0686022ff2ecf1fc",
+        "type": "change",
+        "z": "7addb0f3d615f5f1",
+        "name": "Set feed for link",
+        "rules": [
+            {
+                "t": "set",
+                "p": "feed",
+                "pt": "msg",
+                "to": "payload.data[0].station.url",
+                "tot": "msg"
+            },
+            {
+                "t": "delete",
+                "p": "payload",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 740,
+        "y": 280,
+        "wires": [
+            [
+                "18a036d6655c2ec9"
+            ]
+        ]
+    },
+    {
+        "id": "d450c72a6f89361c",
+        "type": "link out",
+        "z": "7addb0f3d615f5f1",
+        "name": "Config",
+        "mode": "link",
+        "links": [
+            "8950a387ba4ae47d"
+        ],
+        "x": 715,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "8950a387ba4ae47d",
+        "type": "link in",
+        "z": "7addb0f3d615f5f1",
+        "name": "Split",
+        "links": [
+            "d450c72a6f89361c"
+        ],
+        "x": 75,
+        "y": 180,
+        "wires": [
+            [
+                "73dc946c0c4a0949"
+            ]
+        ]
+    },
+    {
+        "id": "c395a40b83a81d94",
+        "type": "link out",
+        "z": "7addb0f3d615f5f1",
+        "name": "Split",
+        "links": [
+            "1176456243d0e808"
+        ],
+        "x": 1475,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "1176456243d0e808",
+        "type": "link in",
+        "z": "7addb0f3d615f5f1",
+        "name": "Search",
+        "links": [
+            "c395a40b83a81d94"
+        ],
+        "x": 75,
+        "y": 280,
+        "wires": [
+            [
+                "b0adeae2c4f5ace1"
+            ]
+        ]
+    },
+    {
+        "id": "2c4d6092624488b4",
+        "type": "change",
+        "z": "7addb0f3d615f5f1",
+        "name": "Set city",
+        "rules": [
+            {
+                "t": "set",
+                "p": "city",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1380,
+        "y": 180,
+        "wires": [
+            [
+                "c395a40b83a81d94"
+            ]
+        ]
+    },
+    {
+        "id": "96d664d49f2c8174",
+        "type": "http request",
+        "z": "7addb0f3d615f5f1",
+        "name": "Get Data",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 380,
+        "y": 380,
+        "wires": [
+            [
+                "b912fc0403fd9377"
+            ]
+        ]
+    },
+    {
+        "id": "b912fc0403fd9377",
+        "type": "switch",
+        "z": "7addb0f3d615f5f1",
+        "name": "If OK",
+        "property": "payload.status",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "ok",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 510,
+        "y": 380,
+        "wires": [
+            [
+                "937d9d4ab3b4480b"
+            ]
+        ]
+    },
+    {
+        "id": "2303a6344c0d1070",
+        "type": "function",
+        "z": "7addb0f3d615f5f1",
+        "name": "Parse data & tags",
+        "func": "var aqi_value = 0;\nif (msg.data.data.aqi != \"-\"){\n    aqi_value = msg.data.data.aqi;\n}\n\nvar co_value = 0;\nif (msg.data.data.iaqi.hasOwnProperty(\"co\")){\n    co_value = msg.data.data.iaqi.co.v;\n}\n\nvar h_value = 0;\nif (msg.data.data.iaqi.hasOwnProperty(\"h\")){\n    h_value = msg.data.data.iaqi.h.v;\n}\n\nvar no2_value = 0;\nif (msg.data.data.iaqi.hasOwnProperty(\"no2\")){\n    no2_value = msg.data.data.iaqi.no2.v;\n}\n\nvar o3_value = 0;\nif (msg.data.data.iaqi.hasOwnProperty(\"o3\")){\n    o3_value = msg.data.data.iaqi.o3.v;\n}\n\nvar p_value = 0;\nif (msg.data.data.iaqi.hasOwnProperty(\"p\")){\n    p_value = msg.data.data.iaqi.p.v;\n}\n\nvar pm10_value = 0;\nif (msg.data.data.iaqi.hasOwnProperty(\"pm10\")){\n    pm10_value = msg.data.data.iaqi.pm10.v;\n}\n\nvar pm25_value = 0;\nif (msg.data.data.iaqi.hasOwnProperty(\"pm25\")){\n    pm25_value = msg.data.data.iaqi.pm25.v;\n}\n\nvar so2_value = 0;\nif (msg.data.data.iaqi.hasOwnProperty(\"so2\")){\n    so2_value = msg.data.data.iaqi.so2.v;\n}\n\nvar t_value = 0;\nif (msg.data.data.iaqi.hasOwnProperty(\"t\")){\n    t_value = msg.data.data.iaqi.t.v;\n}\n\nvar w_value = 0;\nif (msg.data.data.iaqi.hasOwnProperty(\"w\")){\n    w_value = msg.data.data.iaqi.w.v;\n}\n\nvar wg_value = 0;\nif (msg.data.data.iaqi.hasOwnProperty(\"wg\")){\n    wg_value = msg.data.data.iaqi.wg.v;\n}\n\nvar lat_value = 0;\nif (msg.data.data.city.geo['0'] != \"-\") {\n    lat_value = msg.data.data.city.geo['0'];\n}\n\nvar lon_value = 0;\nif (msg.data.data.city.geo['1'] != \"-\") {\n    lon_value = msg.data.data.city.geo['1'];\n}\n\nmsg.aqi_value = aqi_value;\nmsg.co_value = co_value;\nmsg.h_value = h_value;\nmsg.no2_value = no2_value;\nmsg.o3_value = o3_value;\nmsg.p_value = p_value;\nmsg.pm10_value = pm10_value;\nmsg.pm25_value = pm25_value;\nmsg.so2_value = so2_value;\nmsg.t_value = t_value;\nmsg.w_value = w_value;\nmsg.wg_value = wg_value;\nmsg.lat_value = lat_value;\nmsg.lon_value = lon_value;\n\nmsg.payload = [{\n    time: msg.data.data.time.s,\n    aqi: msg.aqi_value,\n    co: msg.co_value,\n    h: msg.h_value,\n    no2: msg.no2_value,\n    o3: msg.o3_value,\n    p: msg.p_value,\n    pm10: msg.pm10_value,\n    pm25: msg.pm25_value,\n    so2: msg.so2_value,\n    t: msg.t_value,\n    w: msg.w_value,\n    wg: msg.wg_value,\n    lat: msg.lat_value,\n    lon: msg.lon_value,\n    city: msg.city\n},\n{\n    sta: msg.state,\n    reg: msg.region,\n    key: msg.city\n}];\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 850,
+        "y": 380,
+        "wires": [
+            [
+                "789edc664a7b1074",
+                "fed88af46640d177"
+            ]
+        ]
+    },
+    {
+        "id": "937d9d4ab3b4480b",
+        "type": "change",
+        "z": "7addb0f3d615f5f1",
+        "name": "Load to data",
+        "rules": [
+            {
+                "t": "set",
+                "p": "data",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            },
+            {
+                "t": "delete",
+                "p": "payload",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 650,
+        "y": 380,
+        "wires": [
+            [
+                "2303a6344c0d1070",
+                "3bc1a07208ab7255",
+                "75f01034a50b09ae"
+            ]
+        ]
+    },
+    {
+        "id": "dc5c7223d0abf91a",
+        "type": "function",
+        "z": "7addb0f3d615f5f1",
+        "name": "Create feed URL",
+        "func": "var feed = flow.get(\"feed\");\nvar token = flow.get(\"token\");\nvar url;\n\n\nurl = feed.concat(msg.feed);\nurl = url.concat('/?token=');\nurl = url.concat(token);\n\ndelete msg.feed;\nmsg.url = url;\n\nreturn msg;    ",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 210,
+        "y": 380,
+        "wires": [
+            [
+                "96d664d49f2c8174",
+                "5f15650be2a30b2f"
+            ]
+        ]
+    },
+    {
+        "id": "18a036d6655c2ec9",
+        "type": "link out",
+        "z": "7addb0f3d615f5f1",
+        "name": "search",
+        "links": [
+            "e6ad42e968e9f6c8"
+        ],
+        "x": 855,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "e6ad42e968e9f6c8",
+        "type": "link in",
+        "z": "7addb0f3d615f5f1",
+        "name": "get",
+        "links": [
+            "18a036d6655c2ec9"
+        ],
+        "x": 75,
+        "y": 380,
+        "wires": [
+            [
+                "dc5c7223d0abf91a"
+            ]
+        ]
+    },
+    {
+        "id": "a2e6de1ecd3bffc3",
+        "type": "delay",
+        "z": "7addb0f3d615f5f1",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "1",
+        "timeoutUnits": "minutes",
+        "rate": "1",
+        "nbRateUnits": "5",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 540,
+        "y": 180,
+        "wires": [
+            [
+                "9a5e7c9ee14856ee"
+            ]
+        ]
+    },
+    {
+        "id": "de237349ded547c4",
+        "type": "delay",
+        "z": "7addb0f3d615f5f1",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "1",
+        "timeoutUnits": "minutes",
+        "rate": "10",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "outputs": 1,
+        "x": 1220,
+        "y": 180,
+        "wires": [
+            [
+                "2c4d6092624488b4"
+            ]
+        ]
+    },
+    {
+        "id": "fed88af46640d177",
+        "type": "debug",
+        "z": "7addb0f3d615f5f1",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1050,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "cbe9d48c550e0638",
+        "type": "comment",
+        "z": "7addb0f3d615f5f1",
+        "name": "Start",
+        "info": "",
+        "x": 90,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "67753505614f7313",
+        "type": "comment",
+        "z": "7addb0f3d615f5f1",
+        "name": "Prepare",
+        "info": "",
+        "x": 100,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "3567db167cd84748",
+        "type": "comment",
+        "z": "7addb0f3d615f5f1",
+        "name": "Search",
+        "info": "",
+        "x": 90,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "783cdc510c13bf71",
+        "type": "comment",
+        "z": "7addb0f3d615f5f1",
+        "name": "Get and upload",
+        "info": "",
+        "x": 120,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "3bc1a07208ab7255",
+        "type": "link out",
+        "z": "7addb0f3d615f5f1",
+        "name": "notify",
+        "links": [
+            "d73ff2a7.57c18"
+        ],
+        "x": 775,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "789edc664a7b1074",
+        "type": "mydb",
+        "z": "7addb0f3d615f5f1",
+        "name": "PSQL Insert Data",
+        "style": "mustache",
+        "substEnvVars": false,
+        "query": "INSERT INTO registros VALUES (\n    '{{msg.data.data.time.s}}',\n    '{{msg.region}}',\n    '{{msg.city}}',\n    {{msg.lat_value}},\n    {{msg.lon_value}},\n    {{msg.aqi_value}},\n    {{msg.co_value}},\n    {{msg.h_value}},\n    {{msg.no2_value}},\n    {{msg.o3_value}},\n    {{msg.p_value}},\n    {{msg.pm10_value}},\n    {{msg.pm25_value}},\n    {{msg.so2_value}},\n    {{msg.t_value}},\n    {{msg.w_value}},\n    {{msg.wg_value}}\n);",
+        "mydbConfig": "2463489cc80b8dc9",
+        "x": 1060,
+        "y": 380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5f15650be2a30b2f",
+        "type": "debug",
+        "z": "7addb0f3d615f5f1",
+        "name": "debug 1",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "url",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 380,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "0f6a3ecb63ccba9b",
+        "type": "split",
+        "z": "7addb0f3d615f5f1",
+        "name": "",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "x": 1030,
+        "y": 480,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "75f01034a50b09ae",
+        "type": "change",
+        "z": "7addb0f3d615f5f1",
+        "name": "Get Forecast",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.fpm10",
+                "pt": "msg",
+                "to": "data.data.forecast.daily.pm10",
+                "tot": "msg"
+            },
+            {
+                "t": "delete",
+                "p": "data.data.forecast.daily.pm10",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 870,
+        "y": 480,
+        "wires": [
+            [
+                "0f6a3ecb63ccba9b"
+            ]
+        ]
+    }
+]

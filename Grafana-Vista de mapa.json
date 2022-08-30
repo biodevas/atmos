@@ -1,0 +1,775 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_POSTGRESQL",
+      "label": "PostgreSQL",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "postgres",
+      "pluginName": "PostgreSQL"
+    },
+    {
+      "name": "DS_INFLUXDB",
+      "label": "InfluxDB",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "influxdb",
+      "pluginName": "InfluxDB"
+    }
+  ],
+  "__elements": {},
+  "__requires": [
+    {
+      "type": "panel",
+      "id": "gauge",
+      "name": "Gauge",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "geomap",
+      "name": "Geomap",
+      "version": ""
+    },
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "9.1.0"
+    },
+    {
+      "type": "datasource",
+      "id": "influxdb",
+      "name": "InfluxDB",
+      "version": "1.0.0"
+    },
+    {
+      "type": "datasource",
+      "id": "postgres",
+      "name": "PostgreSQL",
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "stat",
+      "name": "Stat",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "text",
+      "name": "Text",
+      "version": ""
+    }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "$$hashKey": "object:439",
+        "builtIn": 1,
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotaciones & Alertas",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "description": "",
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "id": null,
+  "links": [
+    {
+      "icon": "external link",
+      "tags": [],
+      "targetBlank": true,
+      "title": "Data Source: WAQI",
+      "type": "link",
+      "url": "https://waqi.info/es/"
+    },
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": false,
+      "keepTime": false,
+      "tags": [
+        "atmos"
+      ],
+      "targetBlank": false,
+      "title": "Tableros",
+      "tooltip": "",
+      "type": "dashboards",
+      "url": ""
+    }
+  ],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "${DS_POSTGRESQL}"
+      },
+      "description": "https://aqicn.org/scale/",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "from": 0,
+                "result": {
+                  "index": 0,
+                  "text": "Bueno"
+                },
+                "to": 50
+              },
+              "type": "range"
+            },
+            {
+              "options": {
+                "from": 50,
+                "result": {
+                  "index": 1,
+                  "text": "Moderado"
+                },
+                "to": 100
+              },
+              "type": "range"
+            },
+            {
+              "options": {
+                "from": 100,
+                "result": {
+                  "index": 2,
+                  "text": "Malo"
+                },
+                "to": 150
+              },
+              "type": "range"
+            },
+            {
+              "options": {
+                "from": 150,
+                "result": {
+                  "index": 3,
+                  "text": "Insalubre"
+                },
+                "to": 200
+              },
+              "type": "range"
+            },
+            {
+              "options": {
+                "from": 200,
+                "result": {
+                  "index": 4,
+                  "text": "Muy poco saludable"
+                },
+                "to": 300
+              },
+              "type": "range"
+            },
+            {
+              "options": {
+                "from": 300,
+                "result": {
+                  "index": 5,
+                  "text": "Peligroso"
+                },
+                "to": 1000
+              },
+              "type": "range"
+            },
+            {
+              "options": {
+                "from": 0,
+                "result": {
+                  "index": 6,
+                  "text": "No data"
+                },
+                "to": 0
+              },
+              "type": "range"
+            }
+          ],
+          "max": 1000,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#a3be8c",
+                "value": null
+              },
+              {
+                "color": "#ebcb8b",
+                "value": 50
+              },
+              {
+                "color": "#d19e71",
+                "value": 100
+              },
+              {
+                "color": "#d08770",
+                "value": 150
+              },
+              {
+                "color": "#bf7262",
+                "value": 200
+              },
+              {
+                "color": "#bf616a",
+                "value": 300
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 0,
+        "y": 0
+      },
+      "id": 14,
+      "interval": "12h",
+      "links": [],
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${DS_POSTGRESQL}"
+          },
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\r\n  DISTINCT ON (city) city,\r\n  $__timeGroupAlias(time,$__interval),\r\n  avg(aqi)\r\nFROM registros\r\nWHERE\r\n  region IN ($Provincia) AND\r\n  city IN ($estacion) AND\r\n  $__timeFilter(time)\r\nGROUP by\r\n  city, time\r\nORDER by city asc, time desc",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "Índice de la calidad del aire (Último)",
+      "transformations": [],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 3,
+        "y": 0
+      },
+      "id": 8,
+      "links": [],
+      "options": {
+        "content": "# Información\n- Fuente: https://waqi.info/\n- Creado por: Jose Carlos Nieto Ramos",
+        "mode": "markdown"
+      },
+      "pluginVersion": "9.1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "transparent": true,
+      "type": "text"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "${DS_POSTGRESQL}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "green",
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "max": 150,
+          "noValue": "0",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 21
+              },
+              {
+                "color": "orange",
+                "value": 71
+              },
+              {
+                "color": "dark-red",
+                "value": 120
+              }
+            ]
+          },
+          "unit": "velocitykmh"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 9,
+        "y": 0
+      },
+      "id": 15,
+      "interval": "1h",
+      "links": [],
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
+      },
+      "pluginVersion": "9.1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${DS_POSTGRESQL}"
+          },
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\r\n  DISTINCT ON (city) city,\r\n  $__timeGroupAlias(time,$__interval),\r\n  max(w) as \"wind\"\r\nFROM registros\r\nWHERE\r\n  region IN ($Provincia) AND\r\n  city IN ($estacion)\r\nGROUP by\r\n  city, time\r\nORDER by city asc, time desc",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "Velocidad del viento",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "${DS_POSTGRESQL}"
+      },
+      "description": "https://aqicn.org/scale/",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "decimals": 2,
+          "mappings": [
+            {
+              "options": {
+                "from": 0,
+                "result": {
+                  "color": "super-light-green",
+                  "index": 0
+                },
+                "to": 50
+              },
+              "type": "range"
+            },
+            {
+              "options": {
+                "from": 51,
+                "result": {
+                  "color": "#ebcb8b",
+                  "index": 1
+                },
+                "to": 100
+              },
+              "type": "range"
+            },
+            {
+              "options": {
+                "from": 101,
+                "result": {
+                  "color": "#d08770",
+                  "index": 2
+                },
+                "to": 150
+              },
+              "type": "range"
+            },
+            {
+              "options": {
+                "from": 151,
+                "result": {
+                  "color": "#bf616a",
+                  "index": 3
+                },
+                "to": 200
+              },
+              "type": "range"
+            },
+            {
+              "options": {
+                "from": 201,
+                "result": {
+                  "color": "#b48ead",
+                  "index": 4
+                },
+                "to": 100000
+              },
+              "type": "range"
+            }
+          ],
+          "max": 150,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#a3be8c",
+                "value": null
+              },
+              {
+                "color": "#ebcb8b",
+                "value": 51
+              },
+              {
+                "color": "#d08770",
+                "value": 101
+              },
+              {
+                "color": "#bf616a",
+                "value": 151
+              },
+              {
+                "color": "#b48ead",
+                "value": 201
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 17,
+        "w": 24,
+        "x": 0,
+        "y": 4
+      },
+      "id": 2,
+      "interval": "1h",
+      "options": {
+        "basemap": {
+          "config": {
+            "showLabels": true,
+            "theme": "auto"
+          },
+          "name": "Layer 0",
+          "tooltip": false,
+          "type": "carto"
+        },
+        "controls": {
+          "mouseWheelZoom": true,
+          "showAttribution": false,
+          "showDebug": false,
+          "showScale": true,
+          "showZoom": false
+        },
+        "layers": [
+          {
+            "config": {
+              "blur": 28,
+              "radius": 18,
+              "weight": {
+                "field": "AQI",
+                "fixed": 1,
+                "max": 1,
+                "min": 0
+              }
+            },
+            "filterData": {
+              "id": "byRefId",
+              "options": "A"
+            },
+            "location": {
+              "latitude": "lat",
+              "longitude": "lon",
+              "mode": "coords"
+            },
+            "name": "Estación",
+            "type": "heatmap"
+          }
+        ],
+        "tooltip": {
+          "mode": "details"
+        },
+        "view": {
+          "id": "coords",
+          "lat": 43.425327,
+          "lon": -5.862716,
+          "shared": false,
+          "zoom": 10.34
+        }
+      },
+      "pluginVersion": "9.1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${DS_POSTGRESQL}"
+          },
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\r\n  DISTINCT ON (city) city,\r\n  $__timeGroupAlias(time,$__interval),\r\n  aqi AS \"AQI\",\r\n  avg (co) AS \"co\",\r\n  avg (no2) AS \"no2\",\r\n  avg (o3) AS \"o3\",\r\n  avg (pm10) AS \"pm10\",\r\n  avg (pm25) AS \"pm25\",\r\n  avg (so2) AS \"so2\",\r\n  lat,\r\n  lon\r\nFROM registros\r\nWHERE\r\n  region IN ($Provincia) AND\r\n  city IN ($estacion)\r\nGROUP by\r\n  city, time, lat, lon, aqi\r\nORDER by city asc, time desc",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "Mapa de contaminación",
+      "transformations": [
+        {
+          "id": "concatenate",
+          "options": {
+            "frameNameLabel": "frame",
+            "frameNameMode": "field"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": false,
+              "lat": false,
+              "lon": false
+            },
+            "indexByName": {},
+            "renameByName": {
+              "AQI": "Índice de calidad del aire",
+              "Monóxido de carbono": "",
+              "city": "Ciudad",
+              "co": "Monóxido de carbono",
+              "lat": "Latitud",
+              "lon": "Longitud",
+              "no2": "Dióxido de nitrógeno",
+              "o3": "Ozono",
+              "pm10": "Partículas 10ug",
+              "pm25": "Partículas 2,5ug",
+              "so2": "Dióxido de azufre",
+              "time": "Horario"
+            }
+          }
+        }
+      ],
+      "type": "geomap"
+    }
+  ],
+  "refresh": "5m",
+  "schemaVersion": 37,
+  "style": "dark",
+  "tags": [
+    "atmos",
+    "aire",
+    "asturias",
+    "contaminación",
+    "biodevas"
+  ],
+  "templating": {
+    "list": [
+      {
+        "current": {},
+        "datasource": {
+          "type": "postgres",
+          "uid": "${DS_POSTGRESQL}"
+        },
+        "definition": "select distinct region from registros;",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Área",
+        "multi": true,
+        "name": "Provincia",
+        "options": [],
+        "query": "select distinct region from registros;",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {},
+        "datasource": {
+          "type": "postgres",
+          "uid": "${DS_POSTGRESQL}"
+        },
+        "definition": "select distinct city from registros WHERE region IN (${Provincia});",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Estación",
+        "multi": true,
+        "name": "estacion",
+        "options": [],
+        "query": "select distinct city from registros WHERE region IN (${Provincia});",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 5,
+        "tagValuesQuery": "",
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      }
+    ]
+  },
+  "time": {
+    "from": "now-24h",
+    "to": "now"
+  },
+  "timepicker": {
+    "hidden": true,
+    "refresh_intervals": [
+      "5m"
+    ]
+  },
+  "timezone": "",
+  "title": "Vista de mapa",
+  "uid": "HHfl2hk7z",
+  "version": 24,
+  "weekStart": ""
+}
